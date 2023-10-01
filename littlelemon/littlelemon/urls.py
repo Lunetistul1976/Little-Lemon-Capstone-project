@@ -16,8 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from restaurant.views import BookingViewSet
+from rest_framework.routers import DefaultRouter # Folosit pentru a te redirectiona la URL asociat clasei de vizualizare BookingViewSet
+
+# Clasa ViewSet permite folosirea lui Default Router. Astfel eficientizeaza procesul de creeare a API deoarece nu mai trebuie sa definin 2 clase separate de vizualizare . O clasa pentru a afisa toate inregistarile si alta clasa pentru returnarea unei singure inregistari
+
+router = DefaultRouter()
+router.register(r'tables',BookingViewSet) # Aceasta va fi clasa de vizualizare asociata pachetului/folderului router
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('restaurant/',include('restaurant.urls')),
+    path('restaurant/booking/',include(router.urls)),
 ]
